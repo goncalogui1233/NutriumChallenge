@@ -54,6 +54,7 @@ import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import com.goncalo.nutriumchallenge.R
 import com.goncalo.nutriumchallenge.professionals.domain.model.Professional
+import com.goncalo.nutriumchallenge.professionals.presentation.common.FlowRowView
 import com.goncalo.nutriumchallenge.professionals.presentation.professional_details.viewmodel.ProfessionalDetailViewModel
 import com.goncalo.nutriumchallenge.professionals.presentation.professional_list.viewmodel.UiState
 import com.goncalo.nutriumchallenge.professionals.presentation.professional_list.views.BuildRatingView
@@ -189,7 +190,7 @@ fun ProfessionalDetailInformations(modifier: Modifier = Modifier, professional: 
         }
 
         AnimatedVisibility(seeMore) {
-            FlowRowItemView(
+            FlowRowView(
                 modifier = Modifier.padding(top = 16.dp),
                 title = "Areas of Expertise",
                 itemList = professional.expertise
@@ -197,7 +198,7 @@ fun ProfessionalDetailInformations(modifier: Modifier = Modifier, professional: 
         }
 
         AnimatedVisibility(seeMore) {
-            FlowRowItemView(
+            FlowRowView(
                 modifier = Modifier.padding(top = 16.dp),
                 title = "Spoken Languages",
                 itemList = professional.languages
@@ -222,33 +223,6 @@ fun ProfessionalDetailInformations(modifier: Modifier = Modifier, professional: 
         ) {
             Text(text = btnText, modifier = Modifier.padding(end = 4.dp))
             Icon(imageVector = btnIcon, contentDescription = null)
-        }
-    }
-}
-
-
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-fun FlowRowItemView(modifier: Modifier = Modifier, title: String, itemList: List<String>) {
-    if (itemList.isNotEmpty()) {
-        Column(
-            modifier = modifier
-        ) {
-            Text(
-                text = title,
-                style = TextStyle(fontWeight = FontWeight.SemiBold, fontSize = 18.sp)
-            )
-
-            FlowRow() {
-                itemList.forEach { item ->
-                    Card(
-                        modifier = Modifier.padding(top = 4.dp, end = 4.dp),
-                        border = BorderStroke(1.dp, Color.Black)
-                    ) {
-                        Text(text = item, modifier = Modifier.padding(4.dp))
-                    }
-                }
-            }
         }
     }
 }
