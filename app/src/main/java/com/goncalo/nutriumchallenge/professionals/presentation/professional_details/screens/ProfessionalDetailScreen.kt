@@ -57,6 +57,7 @@ import com.goncalo.nutriumchallenge.professionals.domain.model.Professional
 import com.goncalo.nutriumchallenge.professionals.presentation.common.FlowRowView
 import com.goncalo.nutriumchallenge.professionals.presentation.professional_details.viewmodel.ProfessionalDetailViewModel
 import com.goncalo.nutriumchallenge.professionals.presentation.professional_list.viewmodel.UiState
+import com.goncalo.nutriumchallenge.professionals.presentation.professional_list.views.BuildProfessionalLanguage
 import com.goncalo.nutriumchallenge.professionals.presentation.professional_list.views.BuildRatingView
 
 @Composable
@@ -124,47 +125,62 @@ fun ProfessionalDetailTopBar(modifier: Modifier = Modifier, onBackClick: () -> U
 
 @Composable
 fun ProfessionalDetailHeader(modifier: Modifier = Modifier, professional: Professional) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .shadow(45.dp)
-            .background(
-                color = Color.Gray,
-                shape = RoundedCornerShape(bottomStart = 12.dp, bottomEnd = 12.dp)
-            )
-            .padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
 
-        AsyncImage(
-            model = professional.profilePictureUrl,
-            contentDescription = null,
-            modifier = Modifier
-                .size(100.dp)
-                .clip(RoundedCornerShape(12.dp)),
-            placeholder = painterResource(id = R.drawable.default_person),
-            error = painterResource(id = R.drawable.default_person)
+    Column(modifier = modifier
+        .fillMaxWidth()
+        .shadow(45.dp)
+        .background(
+            color = Color.Gray,
+            shape = RoundedCornerShape(bottomStart = 12.dp, bottomEnd = 12.dp)
         )
-
-        Column(
-            modifier = Modifier.padding(start = 16.dp)
+        .padding(16.dp)) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = professional.name,
-                style = TextStyle(
-                    color = Color.Black,
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Bold
-                )
+
+            AsyncImage(
+                model = professional.profilePictureUrl,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(100.dp)
+                    .clip(RoundedCornerShape(12.dp)),
+                placeholder = painterResource(id = R.drawable.default_person),
+                error = painterResource(id = R.drawable.default_person)
             )
 
-            BuildRatingView(
-                modifier = Modifier.padding(top = 10.dp),
-                rating = professional.rating,
-                ratingCount = professional.ratingCount
-            )
+            Column(
+                modifier = Modifier.padding(start = 16.dp)
+            ) {
+                Text(
+                    text = professional.name,
+                    style = TextStyle(
+                        color = Color.Black,
+                        fontSize = 22.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+
+                BuildRatingView(
+                    modifier = Modifier.padding(top = 10.dp),
+                    rating = professional.rating,
+                    ratingCount = professional.ratingCount
+                )
+
+                BuildProfessionalLanguage(
+                    modifier = Modifier.padding(top = 10.dp),
+                    languageList = professional.languages,
+                    numLanguageDisplay = professional.languages.size
+                )
+            }
         }
+
+        FlowRowView(
+            modifier = Modifier.padding(top = 16.dp),
+            itemList = professional.expertise
+        )
     }
+
+
 }
 
 @Composable
@@ -188,23 +204,6 @@ fun ProfessionalDetailInformation(modifier: Modifier = Modifier, professional: P
                 modifier = Modifier.animateContentSize()
             )
         }
-
-        AnimatedVisibility(seeMore) {
-            FlowRowView(
-                modifier = Modifier.padding(top = 16.dp),
-                title = "Areas of Expertise",
-                itemList = professional.expertise
-            )
-        }
-
-        AnimatedVisibility(seeMore) {
-            FlowRowView(
-                modifier = Modifier.padding(top = 16.dp),
-                title = "Spoken Languages",
-                itemList = professional.languages
-            )
-        }
-
 
         val btnText = if(seeMore) "See Less" else "See More"
         val btnIcon = if(seeMore) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown

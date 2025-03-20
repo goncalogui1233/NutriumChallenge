@@ -16,7 +16,7 @@ import com.goncalo.nutriumchallenge.R
 import com.goncalo.nutriumchallenge.common.getWordListAsString
 
 @Composable
-fun BuildProfessionalLanguage(modifier: Modifier = Modifier, languageList: List<String>) {
+fun BuildProfessionalLanguage(modifier: Modifier = Modifier, languageList: List<String>, numLanguageDisplay: Int = 2) {
     Row(
         modifier = modifier, verticalAlignment = Alignment.CenterVertically
     ) {
@@ -27,7 +27,7 @@ fun BuildProfessionalLanguage(modifier: Modifier = Modifier, languageList: List<
         )
 
         Text(
-            text = languageList.getWordListAsString(2),
+            text = languageList.getWordListAsString(numLanguageDisplay),
             modifier = Modifier.padding(start = 5.dp),
             style = TextStyle(fontSize = 14.sp)
         )

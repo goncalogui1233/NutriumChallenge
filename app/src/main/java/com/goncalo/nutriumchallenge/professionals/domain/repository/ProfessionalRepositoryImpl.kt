@@ -1,6 +1,5 @@
 package com.goncalo.nutriumchallenge.professionals.domain.repository
 
-import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -12,7 +11,6 @@ import com.goncalo.nutriumchallenge.professionals.presentation.professional_list
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
-import kotlinx.serialization.json.jsonPrimitive
 
 class ProfessionalRepositoryImpl(
     private val api: ProfessionalApi,
@@ -23,12 +21,17 @@ class ProfessionalRepositoryImpl(
     ).flow
 
     override suspend fun getProfessionalDetail(id: String): Status<Professional?> {
-        val response = api.getProfessionalById(id)
+        return try {
+            val response = api.getProfessionalById(id)
 
-        return if (response.isSuccessful) {
-            Status(isSuccess = true, content = response.body()!!)
-        } else {
-            Status(isSuccess = false, errorMessage = convertErrorBody(response.errorBody()?.string()))
+            if (response.isSuccessful) {
+                Status(isSuccess = true, content = response.body()!!)
+            } else {
+                Status(isSuccess = false, errorMessage = convertErrorBody(response.errorBody()?.string()))
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Status(isSuccess = false, errorMessage = "")
         }
 
     }

@@ -18,15 +18,18 @@ import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun FlowRowView(modifier: Modifier = Modifier, title: String, itemList: List<String>) {
+fun FlowRowView(modifier: Modifier = Modifier, title: String? = null, itemList: List<String>) {
     if (itemList.isNotEmpty()) {
         Column(
             modifier = modifier
         ) {
-            Text(
-                text = title,
-                style = TextStyle(fontWeight = FontWeight.SemiBold, fontSize = 18.sp)
-            )
+
+            if(title.isNullOrEmpty().not()) {
+                Text(
+                    text = title.toString(),
+                    style = TextStyle(fontWeight = FontWeight.SemiBold, fontSize = 18.sp)
+                )
+            }
 
             FlowRow(
                 modifier = Modifier.padding(top = 4.dp),
