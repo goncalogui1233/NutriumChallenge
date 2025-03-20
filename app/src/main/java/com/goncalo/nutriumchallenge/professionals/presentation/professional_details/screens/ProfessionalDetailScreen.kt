@@ -189,39 +189,48 @@ fun ProfessionalDetailInformation(modifier: Modifier = Modifier, professional: P
         mutableStateOf(false)
     }
 
+    val aboutMeTextSplitNumStrings = remember {
+        2
+    }
+
     Column(
         modifier = modifier
     ) {
-        professional.aboutMe?.let {
+        professional.aboutMe?.let { aboutMeText ->
+            val aboutMeTextSplit = aboutMeText.split(".")
+            val t = aboutMeTextSplit.take(aboutMeTextSplitNumStrings)
+                .joinToString(separator = ".")
+
             Text(
                 text = "About me",
                 style = TextStyle(fontWeight = FontWeight.SemiBold, fontSize = 18.sp)
             )
             Text(
-                text = "${professional.aboutMe}",
-                maxLines = (if (seeMore) Int.MAX_VALUE else 2),
-                overflow = TextOverflow.Ellipsis,
+                text = if (seeMore) aboutMeText else t,
                 modifier = Modifier.animateContentSize()
             )
-        }
 
-        val btnText = if(seeMore) "See Less" else "See More"
-        val btnIcon = if(seeMore) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown
+            if (aboutMeTextSplit.size > aboutMeTextSplitNumStrings) {
+                val btnText = if (seeMore) "See Less" else "See More"
+                val btnIcon =
+                    if (seeMore) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown
 
-        val interactionSource = remember { MutableInteractionSource() }
+                val interactionSource = remember { MutableInteractionSource() }
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp, end = 16.dp)
-                .clickable(
-                    interactionSource = interactionSource,
-                    indication = null
-                ) { seeMore = !seeMore },
-            horizontalArrangement = Arrangement.End
-        ) {
-            Text(text = btnText, modifier = Modifier.padding(end = 4.dp))
-            Icon(imageVector = btnIcon, contentDescription = null)
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp, end = 16.dp)
+                        .clickable(
+                            interactionSource = interactionSource,
+                            indication = null
+                        ) { seeMore = !seeMore },
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    Text(text = btnText, modifier = Modifier.padding(end = 4.dp))
+                    Icon(imageVector = btnIcon, contentDescription = null)
+                }
+            }
         }
     }
 }
