@@ -87,7 +87,7 @@ fun ProfessionalDetailScreen(
                         .verticalScroll(state = scrollState)
                 ) {
                     ProfessionalDetailHeader(professional = professional)
-                    ProfessionalDetailInformations(
+                    ProfessionalDetailInformation(
                         modifier = Modifier.padding(
                             start = 16.dp,
                             top = 16.dp,
@@ -168,7 +168,7 @@ fun ProfessionalDetailHeader(modifier: Modifier = Modifier, professional: Profes
 }
 
 @Composable
-fun ProfessionalDetailInformations(modifier: Modifier = Modifier, professional: Professional) {
+fun ProfessionalDetailInformation(modifier: Modifier = Modifier, professional: Professional) {
     var seeMore by remember {
         mutableStateOf(false)
     }
