@@ -60,7 +60,6 @@ class ProfessionalRemoteMediator(
             val response = api.getProfessionalsList(sortType, loadKey.toString())
 
             response.body()?.let {
-
                 if(loadType == LoadType.REFRESH) {
                     db.clearProfessionalTable()
                 }

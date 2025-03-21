@@ -5,6 +5,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.goncalo.nutriumchallenge.common.Status
+import com.goncalo.nutriumchallenge.common.isTimestampOutOfRange
 import com.goncalo.nutriumchallenge.professionals.data.database.ProfessionalDao
 import com.goncalo.nutriumchallenge.professionals.data.datastore.ProfessionalDataStore
 import com.goncalo.nutriumchallenge.professionals.data.network.ProfessionalApi
@@ -30,39 +31,31 @@ class ProfessionalRepositoryImpl(
 
     override suspend fun getProfessionalDetail(uniqueId: String): Status<Professional?> {
         val professionalDbData = db.getProfessionalByUniqueId(uniqueId)
-        return professionalDbData?.let { professionalDb ->
-
-            //Checks whether the detail information should be refreshed, based on the time it was created
-            val updateDetails = professionalDb.detailTimestamp?.let {
-                val timePassedMillis = System.currentTimeMillis() - professionalDb.detailTimestamp
-                timePassedMillis >= (TIME_TO_UPDATE_DETAIL_MIN * 60 * 1000)
-            } ?: true
-
+        return professionalDbData?.let { professionalDetailDb ->
+            val updateDetails = professionalDetailDb.detailTimestamp.isTimestampOutOfRange(TIME_TO_UPDATE_DETAIL_MIN)
 
             val professionalDetailToView = if (updateDetails) {
                 try {
                     //Fetch detail from api. If response fails, returns information already saved in the DB
-                    val response = api.getProfessionalById(professionalDb.id.toString())
-                    if (response.isSuccessful) {
+                    val response = api.getProfessionalById(professionalDetailDb.id.toString())
+                    if (response.isSuccessful && response.body() != null) {
                         response.body()?.let { professionalDetailRemote ->
                             db.updateProfessional(
                                 professionalDetailRemote.copy(
-                                    uniqueId = professionalDb.uniqueId,
+                                    uniqueId = professionalDetailDb.uniqueId,
                                     detailTimestamp = System.currentTimeMillis()
                                 )
                             )
                             professionalDetailRemote
-                        } ?: kotlin.run {
-                            professionalDb
                         }
-                    } else {
-                        professionalDb
+                    } else { //Request unsuccessful, return data from DB
+                        professionalDetailDb
                     }
-                } catch (e: Exception) {
-                    professionalDb
+                } catch (e: Exception) { //Exception thrown, return data from DB
+                    professionalDetailDb
                 }
-            } else {
-                professionalDb
+            } else { //Data in DB still updated, return data from DB
+                professionalDetailDb
             }
 
             Status(isSuccess = true, content = professionalDetailToView)
