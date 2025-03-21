@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -39,7 +38,6 @@ import com.goncalo.nutriumchallenge.professionals.presentation.professional_list
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfessionalListScreen(
-    modifier: Modifier = Modifier,
     viewModel: ProfessionalListViewModel,
     navController: NavController
 ) {
@@ -50,11 +48,8 @@ fun ProfessionalListScreen(
     } else {
         PullToRefreshBox(isRefreshing = false, onRefresh = { pagingItems.refresh() }) {
             LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 15.dp)
+                modifier = Modifier.padding(horizontal = 15.dp)
             ) {
-
                 item {
                     ProfessionalListHeader(sortOptionSelected = viewModel.sortOption.collectAsState().value) { option ->
                         viewModel.changeSortOptionSelected(option)
@@ -63,7 +58,7 @@ fun ProfessionalListScreen(
 
                 if (pagingItems.loadState.refresh is LoadState.NotLoading) {
                     items(count = pagingItems.itemCount,
-                        key = { item -> pagingItems[item]?.uniqueId ?: item.hashCode() }) { index ->
+                        key = { item -> item.hashCode() }) { index ->
                         val professionalItem = pagingItems[index]
                         professionalItem?.let { professional ->
                             ProfessionalListItem(professionalInfo = professional) {

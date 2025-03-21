@@ -26,7 +26,7 @@ class ProfessionalRepositoryImpl(
         config = PagingConfig(4),
         remoteMediator = ProfessionalRemoteMediator(api, db, dataStore, sort.typeName)
     ){
-        db.getProfessionalPagingSource()
+        db.getAllProfessionalsPagingSource()
     }.flow
 
     override suspend fun getProfessionalDetail(uniqueId: String): Status<Professional?> {
@@ -63,6 +63,8 @@ class ProfessionalRepositoryImpl(
             Status(isSuccess = false)
         }
     }
+
+    override suspend fun getLastFilterUsed() = dataStore.getLastFilterSelected()
 
     companion object {
         private const val TIME_TO_UPDATE_DETAIL_MIN = 5

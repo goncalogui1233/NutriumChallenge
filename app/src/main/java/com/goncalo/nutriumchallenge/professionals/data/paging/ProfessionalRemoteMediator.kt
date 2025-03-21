@@ -21,7 +21,8 @@ class ProfessionalRemoteMediator(
     private var totalPages = 0
 
     override suspend fun initialize(): InitializeAction {
-        return if (db.getAllProfessionalItems().isEmpty()) {
+        return if (db.getAllProfessionalItems().isEmpty() || dataStore.getLastFilterSelected() != sortType) {
+            dataStore.saveLastFilterSelected(sortType)
             InitializeAction.LAUNCH_INITIAL_REFRESH
         } else {
             val listMarkers = dataStore.getProfessionalListPageMarker()

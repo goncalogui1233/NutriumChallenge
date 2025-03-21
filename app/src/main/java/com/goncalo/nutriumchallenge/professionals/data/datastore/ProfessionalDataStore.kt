@@ -15,6 +15,7 @@ class ProfessionalDataStore(
     companion object {
         private val CURRENT_PAGE = stringPreferencesKey("current_page")
         private val TOTAL_PAGES = stringPreferencesKey("total_pages")
+        private val LAST_FILTER = stringPreferencesKey("last_filter")
     }
 
     suspend fun saveProfessionalListPageMarker(currentPage: String, totalPages: String) {
@@ -27,6 +28,17 @@ class ProfessionalDataStore(
     suspend fun getProfessionalListPageMarker(): Pair<String?, String?> {
         val prefs = context.dataStore.data.first()
         return prefs[TOTAL_PAGES] to prefs[CURRENT_PAGE]
+    }
+
+    suspend fun saveLastFilterSelected(filter: String) {
+        context.dataStore.edit {
+            it[LAST_FILTER] = filter
+        }
+    }
+
+    suspend fun getLastFilterSelected(): String? {
+        val prefs = context.dataStore.data.first()
+        return prefs[LAST_FILTER]
     }
 
 }

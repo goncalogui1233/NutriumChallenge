@@ -32,7 +32,7 @@ import com.goncalo.nutriumchallenge.professionals.presentation.common.helpers.Pr
 @Composable
 fun ProfessionalListHeader(
     modifier: Modifier = Modifier,
-    sortOptionSelected: ProfessionalSort,
+    sortOptionSelected: ProfessionalSort?,
     onOptionClicked: (ProfessionalSort) -> Unit
 ) {
 
@@ -89,10 +89,10 @@ fun ProfessionalListHeader(
 
 }
 
-private fun getSortOptionText(option: ProfessionalSort):String {
-    return when(option) {
-        ProfessionalSort.BEST_MATCH -> "Best Match"
+private fun getSortOptionText(option: ProfessionalSort): String {
+    return when (option) {
         ProfessionalSort.RATING -> "Rating"
         ProfessionalSort.MOST_POPULAR -> "Most Popular"
+        else -> "Best Match"
     }
 }

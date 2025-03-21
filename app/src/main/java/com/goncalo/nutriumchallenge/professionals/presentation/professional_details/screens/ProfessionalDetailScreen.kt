@@ -1,6 +1,7 @@
 package com.goncalo.nutriumchallenge.professionals.presentation.professional_details.screens
 
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -90,16 +91,14 @@ fun ProfessionalDetailScreen(
             }
         }
 
-        is UiState.Error -> {
-            Text(text = state.message ?: "")
-        }
+        is UiState.Error -> ProfessionalDetailErrorScreen()
 
         else -> Unit
     }
 }
 
 @Composable
-fun ProfessionalDetailLoadingScreen(modifier: Modifier = Modifier) {
+private fun ProfessionalDetailLoadingScreen(modifier: Modifier = Modifier) {
     Column {
         ShimmerEffect(
             modifier = modifier
@@ -116,6 +115,32 @@ fun ProfessionalDetailLoadingScreen(modifier: Modifier = Modifier) {
                 .padding(16.dp)
                 .clip(RoundedCornerShape(12.dp))
         )
+    }
+}
+
+@Composable
+private fun ProfessionalDetailErrorScreen(modifier: Modifier = Modifier) {
+    Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.sad_face),
+                contentDescription = null,
+                modifier = Modifier.size(32.dp)
+            )
+
+            Text(
+                text = "An error appeared while loading the details. Try again later.",
+                modifier = Modifier.padding(top = 16.dp),
+                style = TextStyle(
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 16.sp
+                )
+            )
+        }
     }
 }
 

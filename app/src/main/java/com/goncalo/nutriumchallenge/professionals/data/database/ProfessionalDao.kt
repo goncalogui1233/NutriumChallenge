@@ -19,7 +19,7 @@ interface ProfessionalDao {
     fun getProfessionalByUniqueId(id: String): Professional?
 
     @Query("SELECT * from Professional")
-    fun getProfessionalPagingSource(): PagingSource<Int, Professional>
+    fun getAllProfessionalsPagingSource(): PagingSource<Int, Professional>
 
     @Query("SELECT * FROM Professional")
     suspend fun getAllProfessionalItems(): List<Professional>

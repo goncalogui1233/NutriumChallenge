@@ -12,4 +12,6 @@ interface ProfessionalRepository {
 
     suspend fun getProfessionalDetail(uniqueId: String) : Status<Professional?>
 
+    suspend fun getLastFilterUsed(): String?
+
 }
