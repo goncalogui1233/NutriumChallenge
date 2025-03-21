@@ -8,6 +8,6 @@ sealed class Screens {
     data object ProfessionalList: Screens()
 
     @Serializable
-    data class ProfessionalDetails(val professionalId: Int): Screens()
+    data class ProfessionalDetails(val professionalUniqueId: Int): Screens()
 
 }

@@ -27,7 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.goncalo.nutriumchallenge.R
-import com.goncalo.nutriumchallenge.professionals.presentation.professional_list.viewmodel.ProfessionalSort
+import com.goncalo.nutriumchallenge.professionals.presentation.common.helpers.ProfessionalSort
 
 @Composable
 fun ProfessionalListHeader(

@@ -1,17 +1,12 @@
 package com.goncalo.nutriumchallenge.professionals.presentation.professional_details.screens
 
-import android.icu.text.CaseMap.Title
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,12 +18,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -47,32 +38,32 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import com.goncalo.nutriumchallenge.R
 import com.goncalo.nutriumchallenge.professionals.domain.model.Professional
-import com.goncalo.nutriumchallenge.professionals.presentation.common.FlowRowView
+import com.goncalo.nutriumchallenge.professionals.presentation.common.helpers.UiState
+import com.goncalo.nutriumchallenge.professionals.presentation.common.views.FlowRowView
+import com.goncalo.nutriumchallenge.professionals.presentation.common.views.ShimmerEffect
 import com.goncalo.nutriumchallenge.professionals.presentation.professional_details.viewmodel.ProfessionalDetailViewModel
-import com.goncalo.nutriumchallenge.professionals.presentation.professional_list.viewmodel.UiState
 import com.goncalo.nutriumchallenge.professionals.presentation.professional_list.views.BuildProfessionalLanguage
 import com.goncalo.nutriumchallenge.professionals.presentation.professional_list.views.BuildRatingView
 
 @Composable
 fun ProfessionalDetailScreen(
-    professionalId: Int,
+    professionalUniqueId: Int,
     navController: NavController,
     viewModel: ProfessionalDetailViewModel,
 ) {
 
     LaunchedEffect(Unit) {
-        viewModel.getProf(professionalId)
+        viewModel.getProfessionalDetail(professionalUniqueId)
     }
 
     when(val state = viewModel.uiState.collectAsState().value) {
-        is UiState.Loading -> CircularProgressIndicator()
+        is UiState.Loading -> ProfessionalDetailLoadingScreen()
         is UiState.Success -> {
             val scrollState = rememberScrollState()
             val professional = state.data
@@ -108,6 +99,28 @@ fun ProfessionalDetailScreen(
 }
 
 @Composable
+fun ProfessionalDetailLoadingScreen(modifier: Modifier = Modifier) {
+    Column {
+        ShimmerEffect(
+            modifier = modifier
+                .fillMaxWidth()
+                .height(200.dp)
+                .padding(vertical = 16.dp)
+                .clip(RoundedCornerShape(bottomStart = 12.dp, bottomEnd = 12.dp))
+        )
+
+        ShimmerEffect(
+            modifier = modifier
+                .fillMaxWidth()
+                .height(150.dp)
+                .padding(16.dp)
+                .clip(RoundedCornerShape(12.dp))
+        )
+    }
+}
+
+
+@Composable
 fun ProfessionalDetailTopBar(modifier: Modifier = Modifier, onBackClick: () -> Unit) {
     Box(
         modifier = modifier
@@ -125,7 +138,6 @@ fun ProfessionalDetailTopBar(modifier: Modifier = Modifier, onBackClick: () -> U
 
 @Composable
 fun ProfessionalDetailHeader(modifier: Modifier = Modifier, professional: Professional) {
-
     Column(modifier = modifier
         .fillMaxWidth()
         .shadow(45.dp)

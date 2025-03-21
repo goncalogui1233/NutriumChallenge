@@ -24,7 +24,6 @@ import com.goncalo.nutriumchallenge.professionals.presentation.professional_deta
 import com.goncalo.nutriumchallenge.professionals.presentation.professional_details.viewmodel.ProfessionalDetailViewModel
 import com.goncalo.nutriumchallenge.professionals.presentation.professional_list.screens.ProfessionalListScreen
 import com.goncalo.nutriumchallenge.professionals.presentation.professional_list.viewmodel.ProfessionalListViewModel
-import com.goncalo.nutriumchallenge.professionals.presentation.professional_list.viewmodel.UiState
 import com.goncalo.nutriumchallenge.ui.theme.NutriumChallengeTheme
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
@@ -57,10 +56,10 @@ class MainActivity : ComponentActivity() {
                             }
 
                             composable<Screens.ProfessionalDetails> {
-                                val professionalId =
-                                    it.toRoute<Screens.ProfessionalDetails>().professionalId
+                                val professionalUniqueId =
+                                    it.toRoute<Screens.ProfessionalDetails>().professionalUniqueId
                                 ProfessionalDetailScreen(
-                                    professionalId = professionalId,
+                                    professionalUniqueId = professionalUniqueId,
                                     navController = navController,
                                     viewModel = detailViewModel
                                 )

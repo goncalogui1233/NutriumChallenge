@@ -6,6 +6,8 @@ class GetProfessionalByIdUseCase(
     private val repository: ProfessionalRepository
 ) {
 
-    suspend operator fun invoke(id: String) = repository.getProfessionalDetail(id)
+    suspend operator fun invoke(uniqueId: String) = repository.getProfessionalDetail(
+        uniqueId
+    )
 
 }

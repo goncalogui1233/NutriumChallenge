@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.goncalo.nutriumchallenge.professionals.domain.model.Professional
 import com.goncalo.nutriumchallenge.professionals.domain.use_case.GetProfessionalByIdUseCase
-import com.goncalo.nutriumchallenge.professionals.presentation.professional_list.viewmodel.UiState
+import com.goncalo.nutriumchallenge.professionals.presentation.common.helpers.UiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,16 +18,13 @@ class ProfessionalDetailViewModel(
     val uiState = _uiState.asStateFlow()
 
 
-    fun getProf(id: Int) = viewModelScope.launch(Dispatchers.IO) {
+    fun getProfessionalDetail(uniqueId: Int) = viewModelScope.launch(Dispatchers.IO) {
         _uiState.emit(UiState.Loading)
-        val result = getProfessionalByIdUseCase(id.toString())
+        val result = getProfessionalByIdUseCase(uniqueId.toString())
         if(result.isSuccess) {
             _uiState.emit(UiState.Success(result.content))
         } else {
             _uiState.emit(UiState.Error(result.errorMessage))
         }
     }
-
-
-
 }

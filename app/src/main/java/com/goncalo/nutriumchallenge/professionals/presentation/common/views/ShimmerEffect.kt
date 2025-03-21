@@ -1,4 +1,4 @@
-package com.goncalo.nutriumchallenge.professionals.presentation.common
+package com.goncalo.nutriumchallenge.professionals.presentation.common.views
 
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode

@@ -1,9 +1,15 @@
-package com.goncalo.nutriumchallenge.professionals.data.network
+package com.goncalo.nutriumchallenge.professionals.data.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.goncalo.nutriumchallenge.professionals.data.network.ProfessionalApi
 import com.goncalo.nutriumchallenge.professionals.domain.model.Professional
 
+
+/**
+ * Paging Source to load list of items. To use only for the list in case we want to remove DB from
+ * application.
+ */
 class ProfessionalPagingSource(
     private val api: ProfessionalApi,
     private val sortType: String,

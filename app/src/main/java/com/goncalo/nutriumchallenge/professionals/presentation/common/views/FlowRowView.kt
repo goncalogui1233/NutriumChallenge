@@ -1,4 +1,4 @@
-package com.goncalo.nutriumchallenge.professionals.presentation.common
+package com.goncalo.nutriumchallenge.professionals.presentation.common.views
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement

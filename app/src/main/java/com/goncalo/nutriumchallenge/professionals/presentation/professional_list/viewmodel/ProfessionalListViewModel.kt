@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.goncalo.nutriumchallenge.professionals.data.repository.ProfessionalRepository
+import com.goncalo.nutriumchallenge.professionals.presentation.common.helpers.ProfessionalSort
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -24,17 +25,4 @@ class ProfessionalListViewModel internal constructor(
     fun changeSortOptionSelected(newSort: ProfessionalSort) {
         _sortOption.value = newSort
     }
-}
-
-
-sealed class UiState<out T> {
-    data object Loading: UiState<Nothing>()
-    data class Success<T>(val data: T?): UiState<T>()
-    data class Error(val message: String?): UiState<Nothing>()
-}
-
-enum class ProfessionalSort(val typeName: String) {
-    BEST_MATCH("best_match"),
-    RATING("rating"),
-    MOST_POPULAR("most_popular")
 }
