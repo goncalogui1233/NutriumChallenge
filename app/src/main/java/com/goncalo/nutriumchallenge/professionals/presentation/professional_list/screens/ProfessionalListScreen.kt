@@ -29,7 +29,7 @@ import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.goncalo.nutriumchallenge.R
-import com.goncalo.nutriumchallenge.professionals.presentation.Screens
+import com.goncalo.nutriumchallenge.professionals.presentation.common.helpers.Screens
 import com.goncalo.nutriumchallenge.professionals.presentation.common.views.ShimmerEffect
 import com.goncalo.nutriumchallenge.professionals.presentation.professional_list.viewmodel.ProfessionalListViewModel
 import com.goncalo.nutriumchallenge.professionals.presentation.professional_list.views.ProfessionalListHeader

@@ -1,10 +1,10 @@
-package com.goncalo.nutriumchallenge.professionals.data.database
+package com.goncalo.nutriumchallenge.database
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class StringAndListConverters {
+class StringListConverters {
 
     @TypeConverter
     fun fromString(value: String): List<String> {

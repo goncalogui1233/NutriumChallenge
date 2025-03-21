@@ -12,7 +12,7 @@ import com.goncalo.nutriumchallenge.professionals.data.network.ProfessionalApi
 import com.goncalo.nutriumchallenge.professionals.data.paging.ProfessionalRemoteMediator
 import com.goncalo.nutriumchallenge.professionals.data.repository.ProfessionalRepository
 import com.goncalo.nutriumchallenge.professionals.domain.model.Professional
-import com.goncalo.nutriumchallenge.professionals.presentation.common.helpers.ProfessionalSort
+import com.goncalo.nutriumchallenge.professionals.presentation.common.helpers.ProfessionalSortType
 import kotlinx.coroutines.flow.Flow
 
 class ProfessionalRepositoryImpl(
@@ -22,7 +22,7 @@ class ProfessionalRepositoryImpl(
 ) : ProfessionalRepository {
 
     @OptIn(ExperimentalPagingApi::class)
-    override fun getProfessionalList(sort: ProfessionalSort): Flow<PagingData<Professional>> = Pager(
+    override fun getProfessionalList(sort: ProfessionalSortType): Flow<PagingData<Professional>> = Pager(
         config = PagingConfig(4),
         remoteMediator = ProfessionalRemoteMediator(api, db, dataStore, sort.typeName)
     ){

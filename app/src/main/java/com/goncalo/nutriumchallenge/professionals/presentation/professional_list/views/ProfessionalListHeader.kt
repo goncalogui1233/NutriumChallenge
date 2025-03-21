@@ -22,20 +22,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.goncalo.nutriumchallenge.R
-import com.goncalo.nutriumchallenge.professionals.presentation.common.helpers.ProfessionalSort
+import com.goncalo.nutriumchallenge.professionals.presentation.common.helpers.ProfessionalSortType
+import kotlin.math.exp
 
 @Composable
 fun ProfessionalListHeader(
     modifier: Modifier = Modifier,
-    sortOptionSelected: ProfessionalSort?,
-    onOptionClicked: (ProfessionalSort) -> Unit
+    sortOptionSelected: ProfessionalSortType?,
+    onOptionClicked: (ProfessionalSortType) -> Unit
 ) {
-
     var expanded by remember {
         mutableStateOf(false)
     }
@@ -46,7 +47,7 @@ fun ProfessionalListHeader(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "Professionals List",
+            text = stringResource(id = R.string.professionals_list),
             style = TextStyle(
                 fontSize = 22.sp,
                 fontWeight = FontWeight.Bold,
@@ -55,7 +56,7 @@ fun ProfessionalListHeader(
         )
 
         Box {
-            IconButton(onClick = { expanded = true }) {
+            IconButton(onClick = { expanded = !expanded }) {
                 Icon(
                     modifier = Modifier.size(28.dp),
                     painter = painterResource(id = R.drawable.filter),
@@ -63,36 +64,32 @@ fun ProfessionalListHeader(
                 )
             }
 
-            DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-
-                ProfessionalSort.entries.forEach {
+            DropdownMenu(expanded = expanded, onDismissRequest = { expanded = !expanded }, shadowElevation = 10.dp) {
+                ProfessionalSortType.entries.forEach { entry ->
                     DropdownMenuItem(
                         text = {
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                if (sortOptionSelected == it) {
+                                if (sortOptionSelected == entry) {
                                     Icon(
                                         imageVector = Icons.Default.Check,
                                         contentDescription = null,
                                         modifier = Modifier.padding(end = 5.dp)
                                     )
                                 }
-                                Text(text = getSortOptionText(it))
+                                Text(text = stringResource(id = getSortOptionText(entry)))
                             }
                         },
-                        onClick = { onOptionClicked(it) })
+                        onClick = { onOptionClicked(entry) })
                 }
             }
         }
-
-
     }
-
 }
 
-private fun getSortOptionText(option: ProfessionalSort): String {
+private fun getSortOptionText(option: ProfessionalSortType): Int {
     return when (option) {
-        ProfessionalSort.RATING -> "Rating"
-        ProfessionalSort.MOST_POPULAR -> "Most Popular"
-        else -> "Best Match"
+        ProfessionalSortType.RATING -> R.string.rating_menu_option
+        ProfessionalSortType.MOST_POPULAR -> R.string.most_popular_option
+        else -> R.string.best_match_menu_option
     }
 }

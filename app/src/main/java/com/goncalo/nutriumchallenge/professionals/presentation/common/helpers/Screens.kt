@@ -1,4 +1,4 @@
-package com.goncalo.nutriumchallenge.professionals.presentation
+package com.goncalo.nutriumchallenge.professionals.presentation.common.helpers
 
 import kotlinx.serialization.Serializable
 

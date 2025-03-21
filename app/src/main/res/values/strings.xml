@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">NutriumChallenge</string>
+
+    <string name="professionals_list">Professionals List</string>
+    <string name="best_match_menu_option">Best Match</string>
+    <string name="rating_menu_option">Rating</string>
+    <string name="most_popular_option">Most Popular</string>
+    <string name="about_me">About Me</string>
 </resources>

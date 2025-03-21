@@ -37,6 +37,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -239,7 +240,7 @@ fun ProfessionalDetailInformation(modifier: Modifier = Modifier, professional: P
                 .joinToString(separator = ".")
 
             Text(
-                text = "About me",
+                text = stringResource(id = R.string.about_me),
                 style = TextStyle(fontWeight = FontWeight.SemiBold, fontSize = 18.sp)
             )
             Text(
