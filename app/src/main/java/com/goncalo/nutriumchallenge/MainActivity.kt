@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -44,14 +46,40 @@ class MainActivity : ComponentActivity() {
                             startDestination = Screens.ProfessionalList
                         ) {
 
-                            composable<Screens.ProfessionalList> {
+                            composable<Screens.ProfessionalList>(
+                                exitTransition = {
+                                    slideOutOfContainer(
+                                        AnimatedContentTransitionScope.SlideDirection.Left,
+                                        tween(1000)
+                                    )
+                                },
+                                popEnterTransition = {
+                                    slideIntoContainer(
+                                        AnimatedContentTransitionScope.SlideDirection.Right,
+                                        tween(1000)
+                                    )
+                                }
+                            ) {
                                 ProfessionalListScreen(
                                     viewModel = listViewModel,
                                     navController = navController
                                 )
                             }
 
-                            composable<Screens.ProfessionalDetails> {
+                            composable<Screens.ProfessionalDetails>(
+                                enterTransition = {
+                                    slideIntoContainer(
+                                        AnimatedContentTransitionScope.SlideDirection.Left,
+                                        tween(1000)
+                                    )
+                                },
+                                popExitTransition = {
+                                    slideOutOfContainer(
+                                        AnimatedContentTransitionScope.SlideDirection.Right,
+                                        tween(1000)
+                                    )
+                                }
+                            ) {
                                 val professionalUniqueId =
                                     it.toRoute<Screens.ProfessionalDetails>().professionalUniqueId
                                 ProfessionalDetailScreen(
