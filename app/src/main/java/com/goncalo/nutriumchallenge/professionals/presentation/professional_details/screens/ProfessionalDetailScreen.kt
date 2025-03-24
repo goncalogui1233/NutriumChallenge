@@ -51,7 +51,7 @@ import com.goncalo.nutriumchallenge.professionals.presentation.common.views.Flow
 import com.goncalo.nutriumchallenge.professionals.presentation.common.views.ShimmerEffect
 import com.goncalo.nutriumchallenge.professionals.presentation.professional_details.viewmodel.ProfessionalDetailViewModel
 import com.goncalo.nutriumchallenge.professionals.presentation.professional_list.views.BuildProfessionalLanguage
-import com.goncalo.nutriumchallenge.professionals.presentation.professional_list.views.BuildRatingView
+import com.goncalo.nutriumchallenge.professionals.presentation.common.views.BuildRatingView
 
 @Composable
 fun ProfessionalDetailScreen(

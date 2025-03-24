@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.goncalo.nutriumchallenge.R
 import com.goncalo.nutriumchallenge.professionals.domain.model.Professional
+import com.goncalo.nutriumchallenge.professionals.presentation.common.views.BuildRatingView
 
 @Composable
 fun ProfessionalListItem(

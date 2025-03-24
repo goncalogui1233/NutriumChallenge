@@ -1,4 +1,4 @@
-package com.goncalo.nutriumchallenge.professionals.presentation.professional_list.views
+package com.goncalo.nutriumchallenge.professionals.presentation.common.views
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
